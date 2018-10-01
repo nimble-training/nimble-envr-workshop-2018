@@ -1,6 +1,6 @@
 ---
 title: "Running an MCMC"
-subtitle: "BYU Summer Institute on Applied Statistics workshop"
+subtitle: "ENVR Asheville workshop short course"
 author: "NIMBLE Development Team"
 output:
   html_document:
@@ -17,7 +17,7 @@ read_chunk("chunks_litters.R")
 
 # One-click MCMC operation: `nimbleMCMC`
 
-**ENVR workshop attendees: please verify that you can run the code on this slide. And if you have time to look through and run the code in the remainder of this module that would be helpful.**
+**ENVR workshop attendees: please verify that you can run the code on this slide. If you'd like, feel free to look through and run the code in the remainder of this module that would be helpful.**
 
 ```{r, litters-nimbleMCMC}
 source('chunks_litters.R')
