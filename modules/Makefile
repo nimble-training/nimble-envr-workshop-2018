@@ -3,7 +3,7 @@ clean:
 
 %.html: %.Rmd
 	./make_slides $(basename $(@))
-#	rm -f $(basename $(@)).md
+
 
 
 
