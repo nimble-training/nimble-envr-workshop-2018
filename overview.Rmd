@@ -113,18 +113,14 @@ Here are the modules we'll work through for this short course.
     2. [The BUGS language](modules/2_bugs_language_slides.html)
     3. [Building a model in NIMBLE](modules/3_build_model_slides.html)
     4. [Running an MCMC](modules/4_run_mcmc_slides.html) 
-
-- Customizing an MCMC and advanced model building
- 
+ - Customizing an MCMC and advanced model building 
     5. [Customizing an MCMC](modules/5_customizing_mcmc_slides.html)
     6. [NIMBLE's dialect of BUGS](modules/6_nimble_bugs_slides.html)
     7. [User-defined distributions](modules/7_user_dist_slides.html)
     8. [Introduction to Dirichlet process models and nonparametric density estimation](modules/8_bnp_intro_slides.html)
     9. [Case study: Meta-analysis with nonparametric random effects](modules/9_meta_analysis_slides.html)
     10. [Exercises: MCMC customization and building models](modules/10_exercises_slides.html)   
-
-- Programming algorithms in NIMBLE
- 
+ - Programming algorithms in NIMBLE
     11. [nimbleFunction example: maximum (marginal) likelihood](modules/11_basic_nimbleFunction_slides.html) 
     12. [Operating a NIMBLE model](modules/12_operating_model_slides.html)
     13. [Inspecting model structure](modules/13_model_structure_slides.html)
