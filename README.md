@@ -4,7 +4,7 @@ Materials for NIMBLE short course at the 2018 ASA ENVR workshop.
 
 All materials for the workshop are here. If you're familiar with Git/Github, you already know how to get all the materials on your computer. If you're not, simply click [here](https://github.com/paciorek/nimble-envr-2018/archive/master.zip).
 
-You can see logistical information and an overview of the workshop content [here](overview.Rmd).
+You can see logistical information and an outline of the workshop content [here](overview.Rmd).
 
 Given we have just a few hours in the short course, I would like all attendees to do a little bit of preparation beforehand if at all possible. Please follow these instructions **before** arriving at the short course.
 
