@@ -8,7 +8,7 @@ Given we have just a few hours in the short course, I would like all attendees t
 
   1) Install NIMBLE (see details below)
   2) Skim through these (short) modules, which are hyperlinked in the *overview.html* document:
-     - [modules/1_nimble_background_slides.html](modules/1_nimble_background_slides.html)
+     - [modules/1_nimble_background_slides.html](https://rawgit.com/paciorek/nimble-envr-2018/master/modules/1_nimble_background_slides.html)
      -  [modules/2_bugs_language_slides.html] (you can skip this if you are familiar with BUGS or JAGS),
      - *modules/3_build_model_slides.html*, and
      - the first slide of *modules/4_run_mcmc_slides.html*.
