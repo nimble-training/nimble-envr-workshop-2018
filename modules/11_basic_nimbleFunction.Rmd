@@ -23,7 +23,7 @@ read_chunk('chunks_litters_marginal.R')
  - user-defined BUGS distributions (already seen),
  - user-defined BUGS functions (more-or-less seen)
  - user-defined MCMC samplers (coming soon), and
- - compiling parts of R (already seen), without reference to a model.
+ - compiling parts of R (not seen), without reference to a model.
 
 But their main purpose is providing a way for developers to implement algorithms.
 
@@ -36,9 +36,9 @@ Thus, a nimbleFunction has two parts:
  - setup code: used to tailor the algorithm to a particular model structure. Often this involves determining dependencies amongst nodes in the model and setting up storage using *modelValues*
  - run code: the guts of the algorithm, written generically so it will apply to any (appropriate) model
 
-Setup code is written as a R function, using R code, usually including NIMBLE's special functions for querying the model structure (see the [module on querying model_structure](4.5_model_structure_slides.html). 
+Setup code is written as a R function, using R code, usually including NIMBLE's special functions for querying the model structure (see the [module on querying model structure](4.5_model_structure_slides.html)). 
 
-Run code is written using the NIMBLE *domain-specific language* (DSL). While this is formally a language distinct from R, you can just think of it as a subset of R, enhanced with some functions for operating on the model (see the [module on operating a model](4.4_operating_model_slides.html). 
+Run code is written using the NIMBLE *domain-specific language* (DSL). While this is formally a language distinct from R, you can just think of it as a subset of R, enhanced with some functions for operating on the model (see the [module on operating a model](4.4_operating_model_slides.html)). 
 
 # Some syntax for nimbleFunctions
 
@@ -57,7 +57,9 @@ Here are some of the functions you may use in the run function of a nimbleFuncti
  - *nimbleList* data structures.
 
 
-Chapter 10 of the NIMBLE User Manual describes the syntax for *run* code in detail, including lots of neat functionality such as using nested nimbleFunctions and having multiple run-time functions (i.e., class methods) as part of a nimbleFunction. We'll see more of that in future modules.
+Section IV of the NIMBLE User Manual describes the syntax for *run* code in detail, including lots of neat functionality such as using nested nimbleFunctions and having multiple run-time functions (i.e., class methods) as part of a nimbleFunction. We'll see more of that in future modules.
+
+This [tips and tricks page](https://github.com/nimble-dev/nimble/wiki/Tips-for-avoiding-errors-in-nimbleFunction-programming-and-compilation-%28DSL%29) details some syntax that does NOT work due to some clunkiness in our compilation system. 
 
 nimbleFunctions use **pass-by-reference** not R style **pass-by-value**, so be careful about modifying an object and then using it elsewhere.
   

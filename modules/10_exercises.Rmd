@@ -1,5 +1,5 @@
 ---
-title: "Exercises: MCMC"
+title: "Exercises: MCMC and user-defined distributions"
 subtitle: "ENVR Asheville workshop short course"
 author: "NIMBLE Development Team"
 output:
@@ -7,14 +7,14 @@ output:
     code_folding: show
 ---
 
-# MCMC Exercises
+# Exercises: MCMC
 
  - Run an MCMC on your own model.
  - Try modifying the scale or propCov arguments to the cross-level sampler in the litters example (see how we did this for the standard block sampler) and see if that eliminates the initial stickiness of the sampler.
  - Play with different initializations of the scale or propCov for the block samplers in the litters example.
  - Run one or more of the MCMC variants with multiple chains and judge convergence based on the Gelman-Rubin diagnostic or other diagnostics you like.
 
-# User-defined Distributions Exercises
+# Exercises: User-defined Distributions 
 
 1) Write an "vectorized binomial" distribution that can be used for a vector of $N$ binomial random variables, $r_j \sim binom(p_j, n_j)$.  The *dbinom_vec* nimbleFunction will need to loop over the elements and sum the log-likelihood contributions. You'll need `x = double(1)` because the random variable values will be a vector rather than a scalar. You can use `n <- length(x)` to determine the number of random variables.
 

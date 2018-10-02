@@ -15,13 +15,11 @@ library(nimble)
 read_chunk("chunks_litters.R")
 ```
 
-# Running example: the AFT model
+# Running example: the litters model (reparameterized)
 
 Now let's explore how to understand the dependence structure of a model. After all the model is a directed acyclic graph, so we should be able to work with that graph structure.
 
-We'll demo this using the AFT survival model from the [example models](example_models_slides.Rmd). I'll make a slight tweak to the model and use a multivariate normal prior distribution for *delta* in order to illustrate some additional concepts.
-
-We first need to build the model. I'll build a version using a different parameterization for the survival probabilities.
+We'll work with a different parameterization of the beta distribution to be able to illustrate additional concepts.
 
 ```{r, litters-reparam-code}
 littersCode <- nimbleCode({
@@ -30,6 +28,7 @@ littersCode <- nimbleCode({
         # likelihood (data model)
         r[i,j] ~ dbin(p[i,j], n[i,j])
         # latent process (random effects)
+        # note use of alternative parameterization and named parameters
         p[i,j] ~ dbeta(mean = mu[i], sd = sigma[i])
      }
      # prior for hyperparameters
@@ -63,11 +62,11 @@ model <- nimbleModel(littersCode,
 
 The parameters and data in a model are represented as nodes in a graph. Here we define some terms:
 
- - parameter: an unknown quantity in the model that is represented as a random variable and will generally be estimated in an algorithm, e.g. `mu[1]` in the litters model
+ - parameter: an unknown quantity in the model that is represented as a random variable and will generally be estimated in an algorithm, e.g. `mu[1]` in the (reparameterized) litters model
  - data: a known quantity in a model, also represented as a random variable, e.g., `r[1, 1], ..., r[1, 16], ...` in the litters model
- - constants: other fixed quantities involved in the model, e.g., `G` in the AFT model
- - node: an element in the model graph representing data, parameter, or a deterministic quantity that is a function of other quantities in the model, e.g., `mu[1]`, `mu[2]`, or `p[1, 5]` in the AFT model
- - variable: a collection of one or more nodes with the same name, e.g., `mu` or `r` in the litters model. 
+ - constants: other fixed quantities involved in the model, e.g., `G` in the litters model
+ - node: an element in the model graph representing data, parameter, or a deterministic quantity that is a function of other quantities in the model, e.g., `mu[1]`, `mu[2]`, or `p[1, 5]` in the litters model
+ - variable: a collection of one or more nodes with the same name, e.g., *mu* or *r* in the litters model. 
 
 Note, if we have a multivariate distribution, then the node includes all of the elements: suppose we define `mu[1:2]` to have a bivariate normal prior; then `mu[1:2]` is the node and `mu` is the variable. 
 

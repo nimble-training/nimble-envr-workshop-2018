@@ -19,12 +19,12 @@ library(nimble)
 
 Here we'll program another sampler using nimbleFunctions, this time applying reversible jump (RJ) MCMC for variable selection in the parametric Avandia model example. The nice thing about RJ for variable selection is that it is a fairly straightforward implementation of RJ.
 
-Let's see if the group information (i.e., $\theta$) is needed in the model; in other words how much evidence is there that there is a difference between the two groups. 
+Let's see if the group information (i.e., $\theta$) is needed in the model; in other words how much evidence is there that there is a difference between the two groups?
 
 
 # BUGS code for reversible jump version of parametric Avandia model
 
-Here's the BUGS code that implements the model specified earlier, modified slightly to allow for variable selection by adding an indicator that will "turn on" or "turn off" the hemoglobin coefficient.
+Here's the BUGS code that implements the model specified earlier, modified slightly to allow for variable selection by adding an indicator that will "turn on" or "turn off" the Avandia effect.
 
 ```{r, avandia-bugs}
 codeParamSel <- nimbleCode({
@@ -226,19 +226,19 @@ constants = list(n = n, m = m, nStudies = nStudies)
 
 inits = list(theta = 0, mu = 0, tau = 1, gamma = rnorm(nStudies), indic = 1)
 
-modelParam <- nimbleModel(code = codeParam, data = data, inits = inits,
+modelParamSel <- nimbleModel(code = codeParamSel, data = data, inits = inits,
                       constants = constants)
-cModelParam = compileNimble(modelParam)
+cModelParamSel = compileNimble(modelParamSel)
 
-conf <- configureMCMC(model, thin = 10, monitors = c('theta', 'indic'))
+conf <- configureMCMC(modelParamSel, thin = 10, monitors = c('theta', 'indic'))
 conf$removeSamplers(c('theta', 'indic'))
 ## special changes for variable selection:
 conf$addSampler('indic', 'RJ_var_sel', control = list(coef = 'theta', scale = 0.5))
 conf$addSampler('theta', 'slice_var_sel_wrapper', control = list(indicator = 'indic'))
 
 mcmc <- buildMCMC(conf)
-cmcmc <- compileNimble(mcmc, project = model)
-samples <- runMCMC(cmcmc, niter = 3000, nburnin = 1000)
+cmcmc <- compileNimble(mcmc, project = modelParamSel)
+samples <- runMCMC(cmcmc, niter = 11000, nburnin = 1000)
 ```
 
 Let's look at the MCMC behavior of the indicator and of the coefficient of interest.
@@ -254,3 +254,4 @@ ts.plot(samples[ , 'theta'], xlab = 'iterations', ylab = 'delta[2]',
 mean(samples[ , 'indic'])  
 ```
 
+That's less strong evidence for an Avandia effect than I interpreted based on the posterior from module 9...

@@ -16,7 +16,7 @@ library(nimble)
 
 # Introduction to Bayesian nonparametrics (BNP)
 
-Bayesian nonparametrics just appeared as a beta feature in version 0.6-11 of NIMBLE, released last week. At the moment, we have two standard representations of Bayesian nonparametric mixture models based on Dirichlet processes:
+Bayesian nonparametrics appeared as a beta feature in version 0.6-11 of NIMBLE, released in June, and is under very active development. At the moment, we have two standard representations of Bayesian nonparametric mixture models based on Dirichlet processes:
 
    - Chinese Restaurant Process distribution
    - stick-breaking representation
@@ -92,4 +92,4 @@ For stick-breaking-based modelss, NIMBLE employs the *blocked* Gibbs sampler
 
    - The beta-distributed variables that determine the stick-breaking are sampled from their conditional distribution (there is a specific conjugacy that is available in this situation).
    - Standard (possibly conjugate) samplers are assigned to the parameters of the clusters.
-   - NIMBLE's standard "conjugate" sampler is assigned to the categorical cluster membership variables.
+   - NIMBLE's standard conjugate sampler is assigned to the categorical cluster membership variables.

@@ -16,7 +16,7 @@ Given we have just a few hours in the short course, I would like all attendees t
      - the first slide of [modules/4_run_mcmc_slides.html](https://rawgit.com/paciorek/nimble-envr-2018/master/modules/4_run_mcmc_slides.html).
   3) Run the code in  [modules/3_build_model.Rmd](https://rawgit.com/paciorek/nimble-envr-2018/master/modules/3_build_model.Rmd) and the code in the first section of [modules/4_run_mcmc.Rmd](https://rawgit.com/paciorek/nimble-envr-2018/master/modules/4_run_mcmc.Rmd) (under "One-click MCMC operation") to make sure that your installation works and get a sense for basic usage of NIMBLE.
 
-At the very least, please install NIMBLE and either email me or our Google group if you run into problems.
+At the very least, please install NIMBLE and either email me or [our Google group](https://groups.google.com/forum/#!forum/nimble-users) if you run into problems.
 
 ## Installing NIMBLE
 
@@ -24,7 +24,7 @@ NIMBLE is an R package on CRAN, so in general it will be straightforward to inst
 
 In summary, here are the steps.
 
-1. Install compiler tools on your system. [https://r-nimble.org/download](https://r-nimble.org/download) has more details on how to install *Rtools* on Windows and how to install the command line tools of *Xcode* on a Mac. Note that if you have packages requiring a compiler (e.g., *Rcpp) on your computer, you should already have the compiler tools installed.
+1. Install compiler tools on your system. [https://r-nimble.org/download](https://r-nimble.org/download) has more details on how to install *Rtools* on Windows and how to install the command line tools of *Xcode* on a Mac. Note that if you have packages requiring a compiler (e.g., *Rcpp*) on your computer, you should already have the compiler tools installed.
 2. install the *nimble* package from CRAN. 
 
 More details can also be found in Section 4 of the [NIMBLE manual](http://r-nimble.org/manuals/NimbleUserManual.pdf).

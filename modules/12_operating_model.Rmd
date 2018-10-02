@@ -48,18 +48,6 @@ littersCode <- nimbleCode({
 ```{r, litters-compile}
 ```
 
-# Nodes and variables
-
-The parameters and data in a model are represented as nodes in a graph. Here we define some terms:
-
- - parameter: an unknown quantity in the model that is represented as a random variable and will generally be estimated in an algorithm, e.g. `a[1]` in the litters model
- - data: a known quantity in a model, also represented as a random variable, e.g., `r[1,1], r[1,2], ...` in the litters model
- - constants: other fixed quantities involved in the model, e.g., `N` in the litters model
- - node: an element in the model graph representing data, parameter, or a deterministic quantity that is a function of other quantities in the model, e.g., `a[1]`, `p[1, 1]` or `p[1, 2]` in the litters model.
-     - One node is created for each `~` or `<-` in BUGS code, with multiple nodes created when these are in a for loop.
- - variable: a collection of one or more nodes with the same name, e.g., *r*, *p*, or *a* in the litters model
-
-
 # Values in the model
 
 What's the current value in a variable?
@@ -107,9 +95,11 @@ littersModel$a[1] <- 1
 littersModel$b[1] <- 3
 littersModel$getLogProb('p')  # recall why this hasn't changed yet
 ## littersModel$calculate('p')  ## DON'T DO THIS (though it's ok to do here...)
-littersModel$calculate(littersModel$getDependencies(c('a[1]','b[1]')))
-## or we could just update the entire model to be safe:
+littersModel$calculate(littersModel$getDependencies(c('a[1]','b[1]'))) ## DO DO THIS
+## alternatively, or we could just update the entire model to be safe:
 ## littersModel$calculate()
+
+## now that model state is updated, can ask for logProbs
 littersModel$getLogProb('p')
 ```
 
