@@ -94,6 +94,8 @@ In later modules, we'll see why this is useful for
  - programming algorithms
  - working with your model (e.g., doing a simulation study)
 
+(Note that the initial NA values for *p* explain the earlier message about the model not being fully initialized.)
+
 ```{r operate-model}
 cLittersModel$p
 cLittersModel$calculate('a')   # log-prior density
@@ -109,3 +111,4 @@ littersModel$getLogProb('p')  # log prob not yet updated!
 littersModel$calculate('p')   # update it
 littersModel$getLogProb('p')  # now we're good
 ```
+

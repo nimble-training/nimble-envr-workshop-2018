@@ -19,7 +19,7 @@ read_chunk("chunks_litters.R")
 
 **ENVR workshop attendees: please verify that you can run the code on this slide. If you'd like, feel free to look through and run the code in the remainder of this module that would be helpful.**
 
-```{r, litters-nimbleMCMC}
+```{r, litters-nimbleMCMC, fig.caption = '', fig.width=16}
 source('chunks_litters.R')
 samples <- nimbleMCMC(code = littersCode, data = littersData, inits = littersInits,
                       constants = littersConstants, monitors = c("a", "b", "p"),
