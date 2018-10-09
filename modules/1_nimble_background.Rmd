@@ -21,7 +21,7 @@ We have an extensive website ([https://r-nimble.org](r-nimble.org)) with fairly 
 
 # NIMBLE components
 
-* Model language: A new dialect of BUGS/JAGS for specifying models
+* Model language: A new, extended dialect of BUGS/JAGS for specifying models
 * A package of algorithms (MCMC, SMC, MCEM)
 * Algorithm language: nimbleFunctions, embedded within R for writing algorithms
 * Compiler: Generates and compiles C++ from models and algorithms

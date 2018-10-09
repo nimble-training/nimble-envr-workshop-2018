@@ -18,7 +18,7 @@ read_chunk("chunks_litters.R")
 
 # Overview
 
-We've seen nimbleFunctions in several contexts so far, including an example in which we queried model structure and used NIMBLE's built-in methods for doing calculations with a model. In this module, we'll explore doing general calculations with a model. 
+We've seen nimbleFunctions in a couple contexts so far, including the maximum marginal likelihood example in which we queried model structure and used NIMBLE's built-in methods for doing calculations with a model. In this module, we'll explore doing general calculations with a model. 
 
 We'll start with how one can treat the model as an object that you can manipulate. Even without further NIMBLE programming this can be useful for exploring a model or for setting up simulations with a model.
 
@@ -94,8 +94,8 @@ littersModel$getLogProb('p')
 littersModel$a[1] <- 1
 littersModel$b[1] <- 3
 littersModel$getLogProb('p')  # recall why this hasn't changed yet
-## littersModel$calculate('p')  ## DON'T DO THIS (though it's ok to do here...)
-littersModel$calculate(littersModel$getDependencies(c('a[1]','b[1]'))) ## DO DO THIS
+## littersModel$calculate('p')  ## DON'T DO THIS! (though it's ok to do here...)
+littersModel$calculate(littersModel$getDependencies(c('a[1]','b[1]'))) ## DO THIS!
 ## alternatively, or we could just update the entire model to be safe:
 ## littersModel$calculate()
 

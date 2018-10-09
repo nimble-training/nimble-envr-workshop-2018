@@ -297,7 +297,8 @@ littersConf$printSamplers()</code></pre>
 <pre class="r"><code>littersMCMC &lt;- buildMCMC(littersConf)
 ## we need 'resetFunctions' because we are rebuilding the MCMC for an existing model for
 ## which we've already done some compilation
-cLittersMCMC &lt;- compileNimble(littersMCMC, project = littersModel, resetFunctions = TRUE)</code></pre>
+cLittersMCMC &lt;- compileNimble(littersMCMC, project = littersModel,
+   resetFunctions = TRUE)</code></pre>
 <pre><code>## compiling... this may take a minute. Use 'showCompilerOutput = TRUE' to see C++ compiler details.</code></pre>
 <pre><code>## compilation finished.</code></pre>
 <pre class="r"><code>set.seed(1)
@@ -427,9 +428,14 @@ samplesSuperblock &lt;- runMCMC(cLittersMCMC, niter = niter, nburnin = nburn,
 <ul>
 <li>do a blocked Metropolis random walk on one or more hyperparameters and</li>
 <li>then a conjugate update of the dependent nodes conditional on the proposed hyperparameters,</li>
-<li>accepting/rejecting everything together</li>
+<li>accept/reject everything together</li>
 </ul>
-<p>Comments: - this amounts to a joint update of the hyperparameters and their dependent nodes - equivalent to analytically integrating over the dependent nodes - this is the <em>one-block</em> sampler in Knorr-Held and Rue (2002)</p>
+<p>Comments:</p>
+<ul>
+<li>this amounts to a joint update of the hyperparameters and their dependent nodes</li>
+<li>equivalent to analytically integrating over the dependent nodes</li>
+<li>this is the <em>one-block</em> sampler in Knorr-Held and Rue (2002)</li>
+</ul>
 </div>
 <div id="applying-the-cross-level-sampler" class="section level1">
 <h1>Applying the cross-level sampler</h1>
@@ -438,7 +444,8 @@ littersConf$addSampler(c('a[1]', 'b[1]'), 'crossLevel')
 littersConf$addSampler(c('a[2]', 'b[2]'), 'crossLevel')
 
 littersMCMC &lt;- buildMCMC(littersConf)
-cLittersMCMC &lt;- compileNimble(littersMCMC, project = littersModel, resetFunctions = TRUE)</code></pre>
+cLittersMCMC &lt;- compileNimble(littersMCMC, project = littersModel,
+   resetFunctions = TRUE)</code></pre>
 <pre><code>## compiling... this may take a minute. Use 'showCompilerOutput = TRUE' to see C++ compiler details.</code></pre>
 <pre><code>## compilation finished.</code></pre>
 <pre class="r"><code>set.seed(1)

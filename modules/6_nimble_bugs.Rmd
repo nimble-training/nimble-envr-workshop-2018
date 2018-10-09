@@ -122,7 +122,7 @@ When a variable is specified only on the right-hand side of expression(s) in the
     
 * Sometimes NIMBLE is not as smart as BUGS/JAGS at determining dimensions.  There are two solutions:
 
-    * Give dimensions explicity: `x[1:n, 1:m]`, OR
+    * Give dimensions explicitly: `x[1:n, 1:m]`, OR
     * Provide a `dimensions` argument to `nimbleModel`.  Example: `dimensions = list(x = c(n, m))`.
 
 # Vectorized math and linear algebra

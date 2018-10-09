@@ -67,11 +67,13 @@ NIMBLE Development Team
 <ul>
 <li><code>y &lt;- 2 * x</code></li>
 </ul>
-<h3 id="for-loops">For loops</h3>
+<h3 id="for-loops-and-vectorized-computations">For loops and vectorized computations</h3>
 <pre><code>for(i in 1:10) {
    lambda[i] &lt;- exp(mu[i])
    y[i] ~ dpois(lambda[i])
 }</code></pre>
+<p>In NIMBLE only, vectorized deterministic (but not stochastic) declarations:</p>
+<pre><code>lambda[1:10] &lt;- exp(mu[1:10])</code></pre>
 </div>
 <div id="classic-bugs-examples" class="slide section level1">
 <h1>Classic BUGS examples</h1>
@@ -80,12 +82,11 @@ NIMBLE Development Team
 <li>Included in NIMBLE (<em>classic-bugs</em> directory) or found here on the <a href="https://sourceforge.net/projects/mcmc-jags/files/Examples/">JAGS website</a>.</li>
 <li>Information provided here: <a href="http://www.mrc-bsu.cam.ac.uk/wp-content/uploads/WinBUGS_Vol1.pdf">Volume 1</a>, <a href="http://www.mrc-bsu.cam.ac.uk/wp-content/uploads/WinBUGS_Vol2.pdf">Volume 2</a>, and <a href="http://www.mrc-bsu.cam.ac.uk/wp-content/uploads/WinBUGS_Vol3.pdf">Volume 3</a> of the WinBUGS example manuals.</li>
 </ul>
-<p>We'll see a variety of example models this afternoon.</p>
 </div>
 <div id="nimbles-dialect-of-bugs" class="slide section level1">
 <h1>NIMBLE's dialect of BUGS</h1>
 <ul>
-<li>The BUGS syntax used in NIMBLE has minor differences from that used in WinBUGS, OpenBUGS and/or JAGS. We'll see some of this as we go along, in particular in the <a href="3.1_nimble_bugs_slides.html">module on NIMBLE's dialect of BUGS</a>.</li>
+<li>The BUGS syntax used in NIMBLE has minor differences from that used in WinBUGS, OpenBUGS and/or JAGS. We'll see some of this as we go along.</li>
 <li>Also described in Section 5 of the <a href="https://r-nimble.org/manuals/NimbleUserManual.pdf">NIMBLE Users Manual</a> and in this <a href="https://r-nimble.org/quick-guide-for-converting-from-jags-or-bugs-to-nimble">blog post</a>.</li>
 </ul>
 </div>

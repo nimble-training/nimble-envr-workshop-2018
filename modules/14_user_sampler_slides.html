@@ -77,9 +77,10 @@ NIMBLE Development Team
     <span class="dt">contains =</span> sampler_BASE,
     <span class="dt">setup =</span> function(model, mvSaved, target, control) {
         dist &lt;-<span class="st"> </span>model$<span class="kw">getDistribution</span>(target)
-        targetComponents &lt;-<span class="st"> </span>model$<span class="kw">expandNodeNames</span>(target, <span class="dt">returnScalarComponents =</span> <span class="ot">TRUE</span>)
+        targetComponents &lt;-<span class="st"> </span>model$<span class="kw">expandNodeNames</span>(target,
+            <span class="dt">returnScalarComponents =</span> <span class="ot">TRUE</span>)
         if(<span class="kw">length</span>(targetComponents) &gt;<span class="st"> </span><span class="dv">1</span>)
-                <span class="kw">stop</span>(<span class="st">&quot;RW_reflect: cannot use univariate RW sampler on multivariate target, try RW_block sampler.&quot;</span>)
+            <span class="kw">stop</span>(<span class="st">&quot;RW_reflect: cannot use univariate RW sampler on multivariate target, try RW_block sampler.&quot;</span>)
         rg &lt;-<span class="st"> </span><span class="kw">getDistributionInfo</span>(dist)$range
         if(rg[[<span class="dv">1</span>]] &gt;<span class="st"> </span>-<span class="ot">Inf</span> ||<span class="st"> </span>rg[[<span class="dv">2</span>]] &lt;<span class="st"> </span><span class="ot">Inf</span>)
                   reflect &lt;-<span class="st"> </span><span class="ot">TRUE</span> else reflect &lt;-<span class="st"> </span><span class="ot">FALSE</span>
@@ -116,16 +117,21 @@ NIMBLE Development Team
 <div id="nimbles-metropolis-sampler" class="slide section level1">
 <h1>NIMBLE's Metropolis sampler</h1>
 <p>Often it's easiest when writing a new sampler that is similar to an existing NIMBLE sampler to just modify the code for the existing sampler. In this case, NIMBLE's existing random walk sampler has some nice additional functionality that we can include in our reflection sampler, specifically the ability to adapt the proposal variance.</p>
-<p>Below is the full new reflection sampler, building on NIMBLE's baseline random walk sampler to include adaptation.</p>
+<p>Below is the full new reflection sampler, building on NIMBLE's baseline random walk sampler to include adaptation. (You can see all of our sampler nimbleFunctions in the file <em>R/MCMC_samplers.R</em> in the <a href="https://cran.r-project.org/src/contrib/nimble_0.6-12.tar.gz">NIMBLE source package</a>.)</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">RW_reflect &lt;-<span class="st"> </span><span class="kw">nimbleFunction</span>(
     <span class="dt">contains =</span> sampler_BASE,
     <span class="dt">setup =</span> function(model, mvSaved, target, control) {
         ## control list extraction
-        logScale      &lt;-<span class="st"> </span>if(!<span class="kw">is.null</span>(control$log))           control$log           else <span class="ot">FALSE</span>
-        reflective    &lt;-<span class="st"> </span>if(!<span class="kw">is.null</span>(control$reflective))    control$reflective    else <span class="ot">FALSE</span>
-        adaptive      &lt;-<span class="st"> </span>if(!<span class="kw">is.null</span>(control$adaptive))      control$adaptive      else <span class="ot">TRUE</span>
-        adaptInterval &lt;-<span class="st"> </span>if(!<span class="kw">is.null</span>(control$adaptInterval)) control$adaptInterval else <span class="dv">200</span>
-        scale         &lt;-<span class="st"> </span>if(!<span class="kw">is.null</span>(control$scale))         control$scale         else <span class="dv">1</span>
+        logScale      &lt;-<span class="st"> </span>if(!<span class="kw">is.null</span>(control$log))
+                      control$log else <span class="ot">FALSE</span>
+        reflective    &lt;-<span class="st"> </span>if(!<span class="kw">is.null</span>(control$reflective))
+                      control$reflective else <span class="ot">FALSE</span>
+        adaptive      &lt;-<span class="st"> </span>if(!<span class="kw">is.null</span>(control$adaptive))
+                      control$adaptive else <span class="ot">TRUE</span>
+        adaptInterval &lt;-<span class="st"> </span>if(!<span class="kw">is.null</span>(control$adaptInterval))
+                      control$adaptInterval else <span class="dv">200</span>
+        scale         &lt;-<span class="st"> </span>if(!<span class="kw">is.null</span>(control$scale))
+                      control$scale else <span class="dv">1</span>
         ###  node list generation  ###
         targetAsScalar &lt;-<span class="st"> </span>model$<span class="kw">expandNodeNames</span>(target, 
                        <span class="dt">returnScalarComponents =</span> <span class="ot">TRUE</span>)
@@ -282,17 +288,17 @@ burnin &lt;-<span class="st"> </span><span class="dv">1000</span>
 <ul>
 <li><p>It must contain the argument <code>contains = sampler_BASE</code>.</p>
 <ul>
-<li>(This is a simple class inheritance system that mimic's R's <code>contains</code> argument.)</li>
+<li>(This is a simple class inheritance system that mimic's R's <em>contains</em> argument.)</li>
 </ul></li>
-<li><p>The <code>setup</code> function must take the arguments <code>model</code>, <code>mvSaved</code>, <code>target</code>, and <code>control</code>.</p>
+<li><p>The <em>setup</em> function must take the arguments <em>model</em>, <em>mvSaved</em>, <em>target</em>, and <em>control</em>.</p>
 <ul>
-<li><code>model</code> is the model being sampled.</li>
-<li><code>mvSaved</code> is a length-one <em>modelValues</em> object that keeps an up-to-date copy of all model values, including log probabilities.</li>
-<li><code>target</code> is a vector of node names to be sampled.</li>
-<li><code>control</code> is a list that can contain whatever elements you want.</li>
+<li><em>model</em> is the model being sampled.</li>
+<li><em>mvSaved</em> is a length-one <em>modelValues</em> object that keeps an up-to-date copy of all model values, including log probabilities.</li>
+<li><em>target</em> is a vector of node names to be sampled.</li>
+<li><em>control</em> is a list that can contain whatever elements you want.</li>
 </ul></li>
-<li><p>The <code>run</code> function (method) must execute the sampler.</p></li>
-<li><p>The <code>reset</code> method must reset the sampler if that means anything for the particular sampler.</p>
+<li><p>The <em>run</em> function (method) must execute the sampler.</p></li>
+<li><p>The <em>reset</em> method must reset the sampler if that means anything for the particular sampler.</p>
 <ul>
 <li>Example: An adaptive sampler would reset its proposal distribution.</li>
 </ul></li>
@@ -302,11 +308,11 @@ burnin &lt;-<span class="st"> </span><span class="dv">1000</span>
 <h1>Required behavior of a sampler:</h1>
 <ul>
 <li><p>Upon entry, the sampler can assume that <code>mvSaved[[1]]</code> contains a complete copy of the model's variables, including logProb variables.</p></li>
-<li><p>The sampler may do whatever it wants (assuming it is valid for MCMC) in its <code>run</code> function, including modifying values of model variables, including logProb variables.</p></li>
-<li><p>Upon exiting the <code>run</code> function, <code>mvSaved[[1]]</code> must again contain a complete copy of the model's variables, including logProb variables.</p>
+<li><p>The sampler may do whatever it wants (assuming it is valid for MCMC) in its <em>run</em> function, including modifying values of model variables, including logProb variables.</p></li>
+<li><p>Upon exiting the <em>run</em> function, <code>mvSaved[[1]]</code> must again contain a complete copy of the model's variables, including logProb variables.</p>
 <ul>
 <li>The <code>mvSaved[[1]]</code> is like the &quot;current&quot; state of the model.</li>
-<li>The <code>run</code> function puts proposed values in the model and does appropriate calculations.</li>
+<li>The <em>run</em> function puts proposed values in the model and does appropriate calculations.</li>
 <li>If the proposal is rejected: copy from <code>mvSaved[[1]]</code> to the model.</li>
 <li>If the proposal is accepted: copy from the model to <code>mvSaved[[1]]</code>.</li>
 </ul></li>

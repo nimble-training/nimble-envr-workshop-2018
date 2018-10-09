@@ -17,14 +17,15 @@ read_chunk("chunks_litters.R")
 
 # One-click MCMC operation: `nimbleMCMC`
 
-**ENVR workshop attendees: please verify that you can run the code on this slide. If you'd like, feel free to look through and run the code in the remainder of this module that would be helpful.**
+**ENVR workshop attendees: please verify that you can run the code on this slide. If you'd like, feel free to look through and run the code in the remainder of this module if you think that would be helpful to you when following along during the workshop.**
 
-```{r, litters-nimbleMCMC, fig.caption = '', fig.width=16}
+```{r, litters-nimbleMCMC, fig.cap='', fig.width=12, fig.height=8}
 source('chunks_litters.R')
 samples <- nimbleMCMC(code = littersCode, data = littersData, inits = littersInits,
                       constants = littersConstants, monitors = c("a", "b", "p"),
-                      thin = 1, niter = 1100, nburnin = 100, nchains = 1, setSeed = TRUE)
-par(mfrow = c(1, 4))
+                      thin = 1, niter = 1100, nburnin = 100, nchains = 1,
+                      setSeed = TRUE)
+par(mfrow = c(2, 2), cex = 1.2, mgp = c(1.8, 0.7, 0), mai = c(0.75, 0.75, 0.1, 0.1))
 ts.plot(samples[ , 'a[1]'], xlab = 'iteration', ylab = expression(a[1]))
 ts.plot(samples[ , 'a[2]'], xlab = 'iteration', ylab = expression(a[2]))
 ts.plot(samples[ , 'b[1]'], xlab = 'iteration', ylab = expression(b[1]))

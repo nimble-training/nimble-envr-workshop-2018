@@ -214,7 +214,8 @@ littersConf$<span class="kw">printSamplers</span>()</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">littersMCMC &lt;-<span class="st"> </span><span class="kw">buildMCMC</span>(littersConf)
 ## we need 'resetFunctions' because we are rebuilding the MCMC for an existing model for
 ## which we've already done some compilation
-cLittersMCMC &lt;-<span class="st"> </span><span class="kw">compileNimble</span>(littersMCMC, <span class="dt">project =</span> littersModel, <span class="dt">resetFunctions =</span> <span class="ot">TRUE</span>)</code></pre></div>
+cLittersMCMC &lt;-<span class="st"> </span><span class="kw">compileNimble</span>(littersMCMC, <span class="dt">project =</span> littersModel,
+   <span class="dt">resetFunctions =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <pre><code>## compiling... this may take a minute. Use 'showCompilerOutput = TRUE' to see C++ compiler details.</code></pre>
 <pre><code>## compilation finished.</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1</span>)
@@ -353,9 +354,14 @@ samplesSuperblock &lt;-<span class="st"> </span><span class="kw">runMCMC</span>(
 <ul>
 <li>do a blocked Metropolis random walk on one or more hyperparameters and</li>
 <li>then a conjugate update of the dependent nodes conditional on the proposed hyperparameters,</li>
-<li>accepting/rejecting everything together</li>
+<li>accept/reject everything together</li>
 </ul>
-<p>Comments: - this amounts to a joint update of the hyperparameters and their dependent nodes - equivalent to analytically integrating over the dependent nodes - this is the <em>one-block</em> sampler in Knorr-Held and Rue (2002)</p>
+<p>Comments:</p>
+<ul>
+<li>this amounts to a joint update of the hyperparameters and their dependent nodes</li>
+<li>equivalent to analytically integrating over the dependent nodes</li>
+<li>this is the <em>one-block</em> sampler in Knorr-Held and Rue (2002)</li>
+</ul>
 </div>
 <div id="applying-the-cross-level-sampler" class="slide section level1">
 <h1>Applying the cross-level sampler</h1>
@@ -364,7 +370,8 @@ littersConf$<span class="kw">addSampler</span>(<span class="kw">c</span>(<span c
 littersConf$<span class="kw">addSampler</span>(<span class="kw">c</span>(<span class="st">'a[2]'</span>, <span class="st">'b[2]'</span>), <span class="st">'crossLevel'</span>)
 
 littersMCMC &lt;-<span class="st"> </span><span class="kw">buildMCMC</span>(littersConf)
-cLittersMCMC &lt;-<span class="st"> </span><span class="kw">compileNimble</span>(littersMCMC, <span class="dt">project =</span> littersModel, <span class="dt">resetFunctions =</span> <span class="ot">TRUE</span>)</code></pre></div>
+cLittersMCMC &lt;-<span class="st"> </span><span class="kw">compileNimble</span>(littersMCMC, <span class="dt">project =</span> littersModel,
+   <span class="dt">resetFunctions =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <pre><code>## compiling... this may take a minute. Use 'showCompilerOutput = TRUE' to see C++ compiler details.</code></pre>
 <pre><code>## compilation finished.</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1</span>)

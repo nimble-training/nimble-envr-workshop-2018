@@ -1,8 +1,8 @@
 ## @knitr dbetabin
 
 dbetabin <- nimbleFunction(
-    run = function(x = double(0), alpha = double(0), beta = double(0), size = double(0), 
-        log = integer(0, default = 0)) {
+    run = function(x = double(0), alpha = double(0), beta = double(0),
+                   size = double(0), log = integer(0, default = 0)) {
         
         returnType(double(0))
         logProb <- lgamma(size+1) - lgamma(x+1) - lgamma(size - x + 1) +
@@ -13,7 +13,9 @@ dbetabin <- nimbleFunction(
     })
 
 rbetabin <- nimbleFunction(
-    run = function(n = integer(0), alpha = double(0), beta = double(0), size = double(0)) {
+    run = function(n = integer(0), alpha = double(0), beta = double(0),
+                   size = double(0)) {
+        
         returnType(double(0))
         if(n != 1) print("rbetabin only allows n = 1; using n = 1.")
         p <- rbeta(1, alpha, beta)

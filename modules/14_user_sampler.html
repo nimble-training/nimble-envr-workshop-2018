@@ -163,9 +163,10 @@ $(document).ready(function () {
     contains = sampler_BASE,
     setup = function(model, mvSaved, target, control) {
         dist &lt;- model$getDistribution(target)
-        targetComponents &lt;- model$expandNodeNames(target, returnScalarComponents = TRUE)
+        targetComponents &lt;- model$expandNodeNames(target,
+            returnScalarComponents = TRUE)
         if(length(targetComponents) &gt; 1)
-                stop(&quot;RW_reflect: cannot use univariate RW sampler on multivariate target, try RW_block sampler.&quot;)
+            stop(&quot;RW_reflect: cannot use univariate RW sampler on multivariate target, try RW_block sampler.&quot;)
         rg &lt;- getDistributionInfo(dist)$range
         if(rg[[1]] &gt; -Inf || rg[[2]] &lt; Inf)
                   reflect &lt;- TRUE else reflect &lt;- FALSE
@@ -202,16 +203,21 @@ $(document).ready(function () {
 <div id="nimbles-metropolis-sampler" class="section level1">
 <h1>NIMBLE’s Metropolis sampler</h1>
 <p>Often it’s easiest when writing a new sampler that is similar to an existing NIMBLE sampler to just modify the code for the existing sampler. In this case, NIMBLE’s existing random walk sampler has some nice additional functionality that we can include in our reflection sampler, specifically the ability to adapt the proposal variance.</p>
-<p>Below is the full new reflection sampler, building on NIMBLE’s baseline random walk sampler to include adaptation.</p>
+<p>Below is the full new reflection sampler, building on NIMBLE’s baseline random walk sampler to include adaptation. (You can see all of our sampler nimbleFunctions in the file <em>R/MCMC_samplers.R</em> in the <a href="https://cran.r-project.org/src/contrib/nimble_0.6-12.tar.gz">NIMBLE source package</a>.)</p>
 <pre class="r"><code>RW_reflect &lt;- nimbleFunction(
     contains = sampler_BASE,
     setup = function(model, mvSaved, target, control) {
         ## control list extraction
-        logScale      &lt;- if(!is.null(control$log))           control$log           else FALSE
-        reflective    &lt;- if(!is.null(control$reflective))    control$reflective    else FALSE
-        adaptive      &lt;- if(!is.null(control$adaptive))      control$adaptive      else TRUE
-        adaptInterval &lt;- if(!is.null(control$adaptInterval)) control$adaptInterval else 200
-        scale         &lt;- if(!is.null(control$scale))         control$scale         else 1
+        logScale      &lt;- if(!is.null(control$log))
+                      control$log else FALSE
+        reflective    &lt;- if(!is.null(control$reflective))
+                      control$reflective else FALSE
+        adaptive      &lt;- if(!is.null(control$adaptive))
+                      control$adaptive else TRUE
+        adaptInterval &lt;- if(!is.null(control$adaptInterval))
+                      control$adaptInterval else 200
+        scale         &lt;- if(!is.null(control$scale))
+                      control$scale else 1
         ###  node list generation  ###
         targetAsScalar &lt;- model$expandNodeNames(target, 
                        returnScalarComponents = TRUE)
@@ -360,17 +366,17 @@ lines(seq_len(nplot), smp2[seq_len(nplot), 'tau'], col = 'red')</code></pre>
 <ul>
 <li><p>It must contain the argument <code>contains = sampler_BASE</code>.</p>
 <ul>
-<li>(This is a simple class inheritance system that mimic’s R’s <code>contains</code> argument.)</li>
+<li>(This is a simple class inheritance system that mimic’s R’s <em>contains</em> argument.)</li>
 </ul></li>
-<li><p>The <code>setup</code> function must take the arguments <code>model</code>, <code>mvSaved</code>, <code>target</code>, and <code>control</code>.</p>
+<li><p>The <em>setup</em> function must take the arguments <em>model</em>, <em>mvSaved</em>, <em>target</em>, and <em>control</em>.</p>
 <ul>
-<li><code>model</code> is the model being sampled.</li>
-<li><code>mvSaved</code> is a length-one <em>modelValues</em> object that keeps an up-to-date copy of all model values, including log probabilities.</li>
-<li><code>target</code> is a vector of node names to be sampled.</li>
-<li><code>control</code> is a list that can contain whatever elements you want.</li>
+<li><em>model</em> is the model being sampled.</li>
+<li><em>mvSaved</em> is a length-one <em>modelValues</em> object that keeps an up-to-date copy of all model values, including log probabilities.</li>
+<li><em>target</em> is a vector of node names to be sampled.</li>
+<li><em>control</em> is a list that can contain whatever elements you want.</li>
 </ul></li>
-<li><p>The <code>run</code> function (method) must execute the sampler.</p></li>
-<li><p>The <code>reset</code> method must reset the sampler if that means anything for the particular sampler.</p>
+<li><p>The <em>run</em> function (method) must execute the sampler.</p></li>
+<li><p>The <em>reset</em> method must reset the sampler if that means anything for the particular sampler.</p>
 <ul>
 <li>Example: An adaptive sampler would reset its proposal distribution.</li>
 </ul></li>
@@ -380,11 +386,11 @@ lines(seq_len(nplot), smp2[seq_len(nplot), 'tau'], col = 'red')</code></pre>
 <h1>Required behavior of a sampler:</h1>
 <ul>
 <li><p>Upon entry, the sampler can assume that <code>mvSaved[[1]]</code> contains a complete copy of the model’s variables, including logProb variables.</p></li>
-<li><p>The sampler may do whatever it wants (assuming it is valid for MCMC) in its <code>run</code> function, including modifying values of model variables, including logProb variables.</p></li>
-<li><p>Upon exiting the <code>run</code> function, <code>mvSaved[[1]]</code> must again contain a complete copy of the model’s variables, including logProb variables.</p>
+<li><p>The sampler may do whatever it wants (assuming it is valid for MCMC) in its <em>run</em> function, including modifying values of model variables, including logProb variables.</p></li>
+<li><p>Upon exiting the <em>run</em> function, <code>mvSaved[[1]]</code> must again contain a complete copy of the model’s variables, including logProb variables.</p>
 <ul>
 <li>The <code>mvSaved[[1]]</code> is like the “current” state of the model.</li>
-<li>The <code>run</code> function puts proposed values in the model and does appropriate calculations.</li>
+<li>The <em>run</em> function puts proposed values in the model and does appropriate calculations.</li>
 <li>If the proposal is rejected: copy from <code>mvSaved[[1]]</code> to the model.</li>
 <li>If the proposal is accepted: copy from the model to <code>mvSaved[[1]]</code>.</li>
 </ul></li>

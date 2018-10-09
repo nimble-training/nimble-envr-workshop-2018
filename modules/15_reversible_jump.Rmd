@@ -47,17 +47,17 @@ codeParamSel <- nimbleCode({
 
 We won't go into all the details, but by looking at the rules for how to set up a valid RJ sampler, one can see that in the simple variable selection case, they simplify to straightforward calculations.
 
-To go from the reduced model, $M^r$, to full model, $M^f$, we need to propose an auxiliary variable, $u$, that augments the dimension of the model and a transformation to produce the new coefficient, $\delta_{2}^*$, given the auxiliary variable. The simplest thing to do is:
+To go from the reduced model, $M^r$, to full model, $M^f$, we need to propose an auxiliary variable, $u$, that augments the dimension of the model and a transformation to produce the new coefficient, $\theta^*$, given the auxiliary variable. The simplest thing to do is:
 
 $$ u \sim J(u) = N(0, \sigma^2) $$
 
-$$ \theta* = u $$
+$$ \theta^* = u $$
 
 The acceptance ratio is then
 
 $$ q = \frac{p(y|\theta^f,M^f)p(\theta^f|M^f) }{p(y|\theta^r,M^r)p(\theta^r|M^r) J(u) } $$
 
-For those of you familiar with RJ, the lack of Jacobian here occurs because the transformation $\delta_{2}^*=u$ has Jacobian equal to 1.
+For those of you familiar with RJ, the lack of Jacobian here occurs because the transformation $\theta^*=u$ has Jacobian equal to 1.
 
 To go from the full to reduced model, we have
 
@@ -76,7 +76,7 @@ The setup code needs to determine the nodes involved in the full model and the r
 
 ```{r, setup-rj, eval=FALSE}
  setup = function( model, mvSaved, target, control ) {
-   # target = 'indic'
+   # target is equal to 'indic' in our example model
    coefNode <- control$coef   # e.g., 'theta'
    scale    <- control$scale  # could be made adaptive
    # with variable
@@ -188,11 +188,15 @@ then use these in the run code.
 slice_var_sel_wrapper <- nimbleFunction(
     contains = sampler_BASE,
     setup = function(model, mvSaved, target, control) {
+        # We create a slice sampler by calling sampler_slice generator to
+        # instantiating a slice sampler nimbleFunction.
+        # 'regular_slice_sampler' will be compiled as part of overall compile.
         regular_slice_sampler <- sampler_slice(model, mvSaved, target = target, 
                                          control = control$sliceControl)
         indicatorNode <- control$indicator
     },
     run = function() {
+        # Note we can call $run method of another nimbleFunction.
         if(model[[indicatorNode]] == 1) regular_slice_sampler$run()
     },
     methods = list(
@@ -233,8 +237,10 @@ cModelParamSel = compileNimble(modelParamSel)
 conf <- configureMCMC(modelParamSel, thin = 10, monitors = c('theta', 'indic'))
 conf$removeSamplers(c('theta', 'indic'))
 ## special changes for variable selection:
-conf$addSampler('indic', 'RJ_var_sel', control = list(coef = 'theta', scale = 0.5))
-conf$addSampler('theta', 'slice_var_sel_wrapper', control = list(indicator = 'indic'))
+conf$addSampler('indic', 'RJ_var_sel',
+                         control = list(coef = 'theta', scale = 0.5))
+conf$addSampler('theta', 'slice_var_sel_wrapper',
+                         control = list(indicator = 'indic'))
 
 mcmc <- buildMCMC(conf)
 cmcmc <- compileNimble(mcmc, project = modelParamSel)
@@ -245,9 +251,9 @@ Let's look at the MCMC behavior of the indicator and of the coefficient of inter
 
 ```{r, results, fig.width=8, fig.height=5, fig.cap=''}
 par(mfrow = c(1,2))
-ts.plot(samples[ , 'indic'], xlab = 'iteration', ylab = 'z2 indicator',
+ts.plot(samples[ , 'indic'], xlab = 'iteration', ylab = 'theta indicator',
                     main = 'theta indicator')
-ts.plot(samples[ , 'theta'], xlab = 'iterations', ylab = 'delta[2]',
+ts.plot(samples[ , 'theta'], xlab = 'iterations', ylab = 'theta',
                main = 'effect of Avandia')
 
 ## posterior probability of inclusion    

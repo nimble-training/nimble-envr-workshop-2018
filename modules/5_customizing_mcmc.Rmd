@@ -76,7 +76,8 @@ littersConf$printSamplers()
 littersMCMC <- buildMCMC(littersConf)
 ## we need 'resetFunctions' because we are rebuilding the MCMC for an existing model for
 ## which we've already done some compilation
-cLittersMCMC <- compileNimble(littersMCMC, project = littersModel, resetFunctions = TRUE)
+cLittersMCMC <- compileNimble(littersMCMC, project = littersModel,
+   resetFunctions = TRUE)
 
 set.seed(1)
 samplesSlice <- runMCMC(cLittersMCMC, niter = niter, nburnin = nburn,
@@ -173,9 +174,10 @@ That is NIMBLE's *cross-level sampler*. Here's what it does:
 
   - do a blocked Metropolis random walk on one or more hyperparameters and
   - then a conjugate update of the dependent nodes conditional on the proposed hyperparameters,
-  - accepting/rejecting everything together
+  - accept/reject everything together
 
-Comments: 
+Comments:
+
   - this amounts to a joint update of the hyperparameters and their dependent nodes
   - equivalent to analytically integrating over the dependent nodes
   - this is the *one-block* sampler in Knorr-Held and Rue (2002)
@@ -189,7 +191,8 @@ littersConf$addSampler(c('a[1]', 'b[1]'), 'crossLevel')
 littersConf$addSampler(c('a[2]', 'b[2]'), 'crossLevel')
 
 littersMCMC <- buildMCMC(littersConf)
-cLittersMCMC <- compileNimble(littersMCMC, project = littersModel, resetFunctions = TRUE)
+cLittersMCMC <- compileNimble(littersMCMC, project = littersModel,
+   resetFunctions = TRUE)
 
 set.seed(1)
 samplesCross <- runMCMC(cLittersMCMC, niter = niter, nburnin = nburn,

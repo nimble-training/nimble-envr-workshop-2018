@@ -58,7 +58,7 @@ NIMBLE Development Team
 </div>
 <div id="overview" class="slide section level1">
 <h1>Overview</h1>
-<p>We've seen nimbleFunctions in several contexts so far, including an example in which we queried model structure and used NIMBLE's built-in methods for doing calculations with a model. In this module, we'll explore doing general calculations with a model.</p>
+<p>We've seen nimbleFunctions in a couple contexts so far, including the maximum marginal likelihood example in which we queried model structure and used NIMBLE's built-in methods for doing calculations with a model. In this module, we'll explore doing general calculations with a model.</p>
 <p>We'll start with how one can treat the model as an object that you can manipulate. Even without further NIMBLE programming this can be useful for exploring a model or for setting up simulations with a model.</p>
 </div>
 <div id="running-example-the-litters-model" class="slide section level1">
@@ -104,20 +104,6 @@ littersModel &lt;-<span class="st"> </span><span class="kw">nimbleModel</span>(l
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cLittersModel &lt;-<span class="st"> </span><span class="kw">compileNimble</span>(littersModel)</code></pre></div>
 <pre><code>## compiling... this may take a minute. Use 'showCompilerOutput = TRUE' to see C++ compiler details.</code></pre>
 <pre><code>## compilation finished.</code></pre>
-</div>
-<div id="nodes-and-variables" class="slide section level1">
-<h1>Nodes and variables</h1>
-<p>The parameters and data in a model are represented as nodes in a graph. Here we define some terms:</p>
-<ul>
-<li>parameter: an unknown quantity in the model that is represented as a random variable and will generally be estimated in an algorithm, e.g. <code>a[1]</code> in the litters model</li>
-<li>data: a known quantity in a model, also represented as a random variable, e.g., <code>r[1,1], r[1,2], ...</code> in the litters model</li>
-<li>constants: other fixed quantities involved in the model, e.g., <code>N</code> in the litters model</li>
-<li>node: an element in the model graph representing data, parameter, or a deterministic quantity that is a function of other quantities in the model, e.g., <code>a[1]</code>, <code>p[1, 1]</code> or <code>p[1, 2]</code> in the litters model.
-<ul>
-<li>One node is created for each <code>~</code> or <code>&lt;-</code> in BUGS code, with multiple nodes created when these are in a for loop.</li>
-</ul></li>
-<li>variable: a collection of one or more nodes with the same name, e.g., <em>r</em>, <em>p</em>, or <em>a</em> in the litters model</li>
-</ul>
 </div>
 <div id="values-in-the-model" class="slide section level1">
 <h1>Values in the model</h1>
@@ -177,7 +163,7 @@ littersModel$b[<span class="dv">1</span>] &lt;-<span class="st"> </span><span cl
 littersModel$<span class="kw">getLogProb</span>(<span class="st">'p'</span>)  <span class="co"># recall why this hasn't changed yet</span></code></pre></div>
 <pre><code>## [1] 8.640757</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## littersModel$calculate('p')  ## DON'T DO THIS (though it's ok to do here...)
-littersModel$<span class="kw">calculate</span>(littersModel$<span class="kw">getDependencies</span>(<span class="kw">c</span>(<span class="st">'a[1]'</span>,<span class="st">'b[1]'</span>))) ## DO DO THIS</code></pre></div>
+littersModel$<span class="kw">calculate</span>(littersModel$<span class="kw">getDependencies</span>(<span class="kw">c</span>(<span class="st">'a[1]'</span>,<span class="st">'b[1]'</span>))) ## DO THIS!</code></pre></div>
 <pre><code>## [1] -39.12377</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## alternatively, or we could just update the entire model to be safe:
 ## littersModel$calculate()

@@ -76,19 +76,22 @@ NIMBLE Development Team
 <li>The 'r' function should have <em>n</em> as its first argument but need only work for <code>n=1</code>.</li>
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dbetabin &lt;-<span class="st"> </span><span class="kw">nimbleFunction</span>(
-    <span class="dt">run =</span> function(<span class="dt">x =</span> <span class="kw">double</span>(<span class="dv">0</span>), <span class="dt">alpha =</span> <span class="kw">double</span>(<span class="dv">0</span>), <span class="dt">beta =</span> <span class="kw">double</span>(<span class="dv">0</span>), <span class="dt">size =</span> <span class="kw">double</span>(<span class="dv">0</span>), 
-        <span class="dt">log =</span> <span class="kw">integer</span>(<span class="dv">0</span>, <span class="dt">default =</span> <span class="dv">0</span>)) {
+    <span class="dt">run =</span> function(<span class="dt">x =</span> <span class="kw">double</span>(<span class="dv">0</span>), <span class="dt">alpha =</span> <span class="kw">double</span>(<span class="dv">0</span>), <span class="dt">beta =</span> <span class="kw">double</span>(<span class="dv">0</span>),
+        <span class="dt">size =</span> <span class="kw">double</span>(<span class="dv">0</span>), <span class="dt">log =</span> <span class="kw">integer</span>(<span class="dv">0</span>, <span class="dt">default =</span> <span class="dv">0</span>)) {
         
         <span class="kw">returnType</span>(<span class="kw">double</span>(<span class="dv">0</span>))
         logProb &lt;-<span class="st"> </span><span class="kw">lgamma</span>(size<span class="dv">+1</span>) -<span class="st"> </span><span class="kw">lgamma</span>(x<span class="dv">+1</span>) -<span class="st"> </span><span class="kw">lgamma</span>(size -<span class="st"> </span>x +<span class="st"> </span><span class="dv">1</span>) +
 <span class="st">            </span><span class="kw">lgamma</span>(alpha +<span class="st"> </span>beta) -<span class="st"> </span><span class="kw">lgamma</span>(alpha) -<span class="st"> </span><span class="kw">lgamma</span>(beta) +
-<span class="st">            </span><span class="kw">lgamma</span>(x +<span class="st"> </span>alpha) +<span class="st"> </span><span class="kw">lgamma</span>(size -<span class="st"> </span>x +<span class="st"> </span>beta) -<span class="st"> </span><span class="kw">lgamma</span>(size +<span class="st"> </span>alpha +<span class="st"> </span>beta)
+<span class="st">            </span><span class="kw">lgamma</span>(x +<span class="st"> </span>alpha) +<span class="st"> </span><span class="kw">lgamma</span>(size -<span class="st"> </span>x +<span class="st"> </span>beta) -
+<span class="st">            </span><span class="kw">lgamma</span>(size +<span class="st"> </span>alpha +<span class="st"> </span>beta)
         if(log) <span class="kw">return</span>(logProb)
         else <span class="kw">return</span>(<span class="kw">exp</span>(logProb))
     })
 
 rbetabin &lt;-<span class="st"> </span><span class="kw">nimbleFunction</span>(
-    <span class="dt">run =</span> function(<span class="dt">n =</span> <span class="kw">integer</span>(<span class="dv">0</span>), <span class="dt">alpha =</span> <span class="kw">double</span>(<span class="dv">0</span>), <span class="dt">beta =</span> <span class="kw">double</span>(<span class="dv">0</span>), <span class="dt">size =</span> <span class="kw">double</span>(<span class="dv">0</span>)) {
+    <span class="dt">run =</span> function(<span class="dt">n =</span> <span class="kw">integer</span>(<span class="dv">0</span>), <span class="dt">alpha =</span> <span class="kw">double</span>(<span class="dv">0</span>), <span class="dt">beta =</span> <span class="kw">double</span>(<span class="dv">0</span>),
+        <span class="dt">size =</span> <span class="kw">double</span>(<span class="dv">0</span>)) {
+        
         <span class="kw">returnType</span>(<span class="kw">double</span>(<span class="dv">0</span>))
         if(n !=<span class="st"> </span><span class="dv">1</span>) <span class="kw">print</span>(<span class="st">&quot;rbetabin only allows n = 1; using n = 1.&quot;</span>)
         p &lt;-<span class="st"> </span><span class="kw">rbeta</span>(<span class="dv">1</span>, alpha, beta)
@@ -169,7 +172,7 @@ samplesMarg &lt;-<span class="st"> </span><span class="kw">runMCMC</span>(cLitte
 
 </div>
 <p>That's not quite as good as the cross-level sampler, almost certainly because the cross-level sampler is blocking each pair of hyperparameters. We could easily do that here.</p>
-<p>Of course if you wanted samples from <code>p</code>, you'd need to write a separate R function (or a nimbleFunction) to do the post-hoc sampling given the posterior samples of <code>a</code> and <code>b</code>. We'll do this as an example when we talk about nimbleFunction programming.</p>
+<p>Of course if you wanted samples from <code>p</code>, you'd need to write a separate R function (or a nimbleFunction) to do the post-hoc sampling given the posterior samples of <code>a</code> and <code>b</code>.</p>
 </div>
 <div id="using-stan---marginalized-model" class="slide section level1">
 <h1>Using Stan - marginalized model</h1>
@@ -218,7 +221,7 @@ fit1 &lt;-<span class="st"> </span><span class="kw">stan</span>(<span class="dt"
 ##                  from /system/linux/lib/R-16.04/3.4/x86_64/site-library/StanHeaders/include/stan/math/rev/mat.hpp:4,
 ##                  from /system/linux/lib/R-16.04/3.4/x86_64/site-library/StanHeaders/include/stan/math.hpp:4,
 ##                  from /system/linux/lib/R-16.04/3.4/x86_64/site-library/StanHeaders/include/src/stan/model/model_header.hpp:4,
-##                  from file544252390927.cpp:8:
+##                  from file25965b31ec2a.cpp:8:
 ## /system/linux/lib/R-16.04/3.4/x86_64/site-library/BH/include/boost/config/compiler/gcc.hpp:186:0: warning: &quot;BOOST_NO_CXX11_RVALUE_REFERENCES&quot; redefined
 ##  #  define BOOST_NO_CXX11_RVALUE_REFERENCES
 ##  ^
@@ -252,9 +255,9 @@ fit1 &lt;-<span class="st"> </span><span class="kw">stan</span>(<span class="dt"
 ## Iteration: 225 / 250 [ 90%]  (Sampling)
 ## Iteration: 250 / 250 [100%]  (Sampling)
 ## 
-##  Elapsed Time: 4.30969 seconds (Warm-up)
-##                5.8264 seconds (Sampling)
-##                10.1361 seconds (Total)</code></pre>
+##  Elapsed Time: 4.04171 seconds (Warm-up)
+##                5.55769 seconds (Sampling)
+##                9.59941 seconds (Total)</code></pre>
 <pre><code>## Warning: There were 15 transitions after warmup that exceeded the maximum treedepth. Increase max_treedepth above 12. See
 ## http://mc-stan.org/misc/warnings.html#maximum-treedepth-exceeded</code></pre>
 <pre><code>## Warning: Examine the pairs() plot to diagnose sampling problems</code></pre>

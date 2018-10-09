@@ -27,7 +27,7 @@ The BUGS language is described in detail in the NIMBLE manual and in the [releva
 
   - `y <- 2 * x`
 
-### For loops
+### For loops and vectorized computations
 
 ```
 for(i in 1:10) {
@@ -36,14 +36,18 @@ for(i in 1:10) {
 }
 ```
 
+In NIMBLE only, vectorized deterministic (but not stochastic) declarations:
+
+```
+lambda[1:10] <- exp(mu[1:10])
+```
+
 # Classic BUGS examples
 
 There are lots of example models originally provided by the BUGS project:
 
   - Included in NIMBLE (*classic-bugs* directory) or found here on the [JAGS website](https://sourceforge.net/projects/mcmc-jags/files/Examples/).
   - Information provided here: [Volume 1](http://www.mrc-bsu.cam.ac.uk/wp-content/uploads/WinBUGS_Vol1.pdf), [Volume 2](http://www.mrc-bsu.cam.ac.uk/wp-content/uploads/WinBUGS_Vol2.pdf), and [Volume 3](http://www.mrc-bsu.cam.ac.uk/wp-content/uploads/WinBUGS_Vol3.pdf) of the WinBUGS example manuals.
-
-We'll see other example models during the workshop.
 
 # NIMBLE's dialect of BUGS
 

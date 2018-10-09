@@ -41,19 +41,22 @@ First we write nimbleFunctions for the density and simulation functions. Note th
 
 ```{r, dbetabin}
 dbetabin <- nimbleFunction(
-    run = function(x = double(0), alpha = double(0), beta = double(0), size = double(0), 
-        log = integer(0, default = 0)) {
+    run = function(x = double(0), alpha = double(0), beta = double(0),
+        size = double(0), log = integer(0, default = 0)) {
         
         returnType(double(0))
         logProb <- lgamma(size+1) - lgamma(x+1) - lgamma(size - x + 1) +
             lgamma(alpha + beta) - lgamma(alpha) - lgamma(beta) +
-            lgamma(x + alpha) + lgamma(size - x + beta) - lgamma(size + alpha + beta)
+            lgamma(x + alpha) + lgamma(size - x + beta) -
+            lgamma(size + alpha + beta)
         if(log) return(logProb)
         else return(exp(logProb))
     })
 
 rbetabin <- nimbleFunction(
-    run = function(n = integer(0), alpha = double(0), beta = double(0), size = double(0)) {
+    run = function(n = integer(0), alpha = double(0), beta = double(0),
+        size = double(0)) {
+        
         returnType(double(0))
         if(n != 1) print("rbetabin only allows n = 1; using n = 1.")
         p <- rbeta(1, alpha, beta)
@@ -147,7 +150,7 @@ makePlot(samplesMarg)
 That's not quite as good as the cross-level sampler, almost certainly because the cross-level sampler is blocking each pair of hyperparameters. We could easily do that here.
 
 
-Of course if you wanted samples from `p`, you'd need to write a separate R function (or a nimbleFunction) to do the post-hoc sampling given the posterior samples of `a` and `b`.  We'll do this as an example when we talk about nimbleFunction programming.
+Of course if you wanted samples from `p`, you'd need to write a separate R function (or a nimbleFunction) to do the post-hoc sampling given the posterior samples of `a` and `b`.  
 
 # Using Stan - marginalized model
 

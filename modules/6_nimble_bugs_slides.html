@@ -160,23 +160,23 @@ littersModel$r</code></pre></div>
 ## [1,]     5     7     7
 ## [2,]     3     3     0</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">littersModel$p</code></pre></div>
-<pre><code>##            [,1]      [,2]      [,3]      [,4]      [,5]      [,6]
-## [1,] 0.09293678 0.2668728 0.2989300 0.5659878 0.4618607 0.3714495
-## [2,] 0.15436105 0.6065446 0.3985017 0.4668739 0.4042702 0.3966327
-##           [,7]      [,8]      [,9]     [,10]     [,11]     [,12]     [,13]
-## [1,] 0.7100494 0.6191583 0.6354325 0.2462297 0.5627031 0.4920116 0.8853825
-## [2,] 0.5001533 0.3619086 0.9107585 0.7588241 0.9008990 0.6887918 0.5633684
-##          [,14]     [,15]     [,16]
-## [1,] 0.6968168 0.4578075 0.7090612
-## [2,] 0.4785749 0.5391705 0.5314211</code></pre>
+<pre><code>##           [,1]      [,2]      [,3]      [,4]      [,5]      [,6]      [,7]
+## [1,] 0.6625949 0.5314910 0.1357045 0.7423249 0.1665830 0.5886917 0.4172995
+## [2,] 0.3922207 0.4752667 0.7591960 0.5104325 0.6112405 0.6672667 0.8117555
+##           [,8]      [,9]     [,10]     [,11]     [,12]     [,13]     [,14]
+## [1,] 0.5841732 0.2166327 0.3514941 0.2877567 0.6957305 0.1775885 0.2919938
+## [2,] 0.4975118 0.5576468 0.5788652 0.2381344 0.3872191 0.3540602 0.9572771
+##          [,15]     [,16]
+## [1,] 0.6673178 0.2577648
+## [2,] 0.7856675 0.3650349</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">littersModel$<span class="kw">simulate</span>(<span class="st">'r'</span>, <span class="dt">includeData =</span> <span class="ot">TRUE</span>)
 littersModel$r</code></pre></div>
 <pre><code>##      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13]
-## [1,]    2    2    2    5    6    1    8    8    6     3     5     7     5
-## [2,]    1    5    6    4    5    3    5    1    7     2     8     5     6
+## [1,]    6    5    0    8    1    6    6   10    3     1     2     6     2
+## [2,]    6    0    8    5    8    7    9    3    6     4     2     4     4
 ##      [,14] [,15] [,16]
-## [1,]     3     4     8
-## [2,]     2     4     5</code></pre>
+## [1,]     2     8     3
+## [2,]     5     7     2</code></pre>
 <ul>
 <li>NIMBLE will usually disambiguate data when it is provided as constants.</li>
 </ul>
@@ -196,7 +196,7 @@ littersModel$r</code></pre></div>
 </ul></li>
 <li><p>Sometimes NIMBLE is not as smart as BUGS/JAGS at determining dimensions. There are two solutions:</p>
 <ul>
-<li>Give dimensions explicity: <code>x[1:n, 1:m]</code>, OR</li>
+<li>Give dimensions explicitly: <code>x[1:n, 1:m]</code>, OR</li>
 <li>Provide a <code>dimensions</code> argument to <code>nimbleModel</code>. Example: <code>dimensions = list(x = c(n, m))</code>.</li>
 </ul></li>
 </ul>

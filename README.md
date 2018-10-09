@@ -25,6 +25,6 @@ NIMBLE is an R package on CRAN, so in general it will be straightforward to inst
 In summary, here are the steps.
 
 1. Install compiler tools on your system. [https://r-nimble.org/download](https://r-nimble.org/download) has more details on how to install *Rtools* on Windows and how to install the command line tools of *Xcode* on a Mac. Note that if you have packages requiring a compiler (e.g., *Rcpp*) on your computer, you should already have the compiler tools installed.
-2. install the *nimble* package from CRAN. 
+2. Install the *nimble* package from CRAN. 
 
 More details can also be found in Section 4 of the [NIMBLE manual](http://r-nimble.org/manuals/NimbleUserManual.pdf).
