@@ -6,6 +6,8 @@ All materials for the workshop are here. If you're familiar with Git/Github, you
 
 You can see logistical information and an outline of the workshop content [here](overview.Rmd).
 
+## Advance preparation
+
 Given we have just a few hours in the short course, I would like all attendees to do a little bit of preparation beforehand if at all possible. Please follow these instructions **before** arriving at the short course.
 
   1) Install NIMBLE (see details below)
